@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Корзина</title>   
+    <script src="packages/jquery-3.3.1.js"></script>
+    <script src="packages/jquery-ui.js"></script>
+    <script src="js/Basket.js"></script>
+    <script src="js/carousel.js"></script>
+    <script>
+    $(document).ready(function() {
+        var basket = new Basket('basket');
+        basket.render('#basket_wrapper');
+
+        $('.good_buy').on('click', function() {
+            var idProduct = parseInt($(this).attr('data-id'));
+            var price = parseInt($(this).parent().find('.product-price').text());
+            var name = $(this).attr('name');
+            basket.add(name, idProduct, price);
+        })
+        $(document).on('click', '.deleteitem', function() {
+            var idProduct = parseInt($(this).attr('dataid'));
+            basket.delete(idProduct);
+        })
+
+        $(".good").draggable({ stack: "#basket_wrapper", helper: "clone" });
+        $("#basket_wrapper").droppable({
+            accept: ".good",
+            over: function() {
+                $("#basket_wrapper").css("background-color", "#F3E2A9");
+            },
+            out: function() {
+                $("#basket_wrapper").css("background-color", "#ffffff");
+            },
+            drop: function() {
+                $(this).css("background-color", "#ffffff");
+                var newgood = $(".ui-draggable-dragging").clone();
+                var goodbutton = newgood.find('button');
+                var idProduct = parseInt($(goodbutton).attr('data-id'));
+                var price = parseInt($(newgood).find('.product-price').text());
+                var name = $(goodbutton).attr('name');
+                basket.add(name, idProduct, price);
+            }
+        });
+    });
+    </script>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="packages/jquery-ui.css">
+</head>
+
+<body>
+    <header>
+        <h1> Популярные товары </h1>
+        <div id="carousel">
+            <ul>
+                <li><img src="images/monitor.jpg"></li>
+                <li><img src="images/headphones.jpg"></li>
+                <li><img src="images/mouse.jpg"></li>
+                <li><img src="images/printer.jpg"></li>
+                <li><img src="images/speakers.jpg"></li>
+            </ul>
+        </div>
+    </header>
+    <div id="basket_wrapper"></div>
+    <hr>
+    <div class="good">
+        <p>Монитор для ПК</p>
+        <p>Стоимость: <span class="product-price">8000</span> руб.</p>
+        <button class="good_buy" data-id="125" name="Монитор для ПК">Купить</button>
+    </div>
+    <div class="good">
+        <p>Лазерный принтер</p>
+        <p>Стоимость: <span class="product-price">5000</span> руб.</p>
+        <button class="good_buy" data-id="126" name="Лазерный принтер">Купить</button>
+    </div>
+    <div class="good">
+        <p>Беспроводная клавиатура</p>
+        <p>Стоимость: <span class="product-price">2000</span> руб.</p>
+        <button class="good_buy" data-id="127" name="Беспроводная клавиатура">Купить</button>
+    </div>
+    <div class="good">
+        <p>Модем 4G</p>
+        <p>Стоимость: <span class="product-price">3000</span> руб.</p>
+        <button class="good_buy" data-id="128" name="Модем 4G">Купить</button>
+    </div>
+</body>
+
+</html>

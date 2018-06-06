@@ -1,0 +1,11 @@
+{
+  "result":1,
+  "basket":[
+    {
+	"name":"Монитор для ПК",
+      "id_product":125,
+      "price":8000
+    }
+  ],
+  "amount": 8000
+}
